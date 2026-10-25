@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I Love You Jacklyn</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap">
+<style>
+/* Layout: one screen. Title on top, a swipe track of photos (moves with the finger). Swiping past the last photo opens a normal scrolling grid of all photos. Black on white. */
+:root{--bg:#ffffff;--fg:#000000;--soft:#cfcfcf;--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--serif);display:flex;flex-direction:column;overflow:hidden}
+h1{margin:0;padding:clamp(20px,4vh,40px) max(16px,env(safe-area-inset-right,0px)) clamp(12px,2vh,20px) max(16px,env(safe-area-inset-left,0px));
+  text-align:center;font-weight:500;font-size:clamp(2rem,6vw,3.4rem);line-height:1.1}
+h1 em{font-style:italic}
+.track{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab}
+.track::-webkit-scrollbar{display:none}
+.track.dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.panel{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;display:grid;place-items:center;min-width:0;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.panel img{max-width:min(100%,1100px);max-height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+body.grid-mode{overflow:auto;display:block;height:auto}
+body.grid-mode .track,body.grid-mode .foot{display:none}
+.all{padding:0 max(16px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:rise .5s ease both}
+@keyframes rise{from{opacity:.0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.again{display:flex;justify-content:center;padding-top:28px}
+.again button{background:none;border:1px solid var(--fg);color:var(--fg);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:1.5rem;line-height:1;display:grid;place-items:center;padding:0}
+.again button:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:1100px;margin:0 auto}
+.ph{all:unset;display:block;cursor:pointer;aspect-ratio:4/5;overflow:hidden;background:#f2f2f2}
+.ph:first-child{grid-column:1 / -1;aspect-ratio:16/9}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.ph:first-child img{object-position:50% 40%}
+.ph:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.foot{display:flex;align-items:center;justify-content:center;gap:18px;padding:clamp(12px,2vh,18px) 16px calc(clamp(14px,2.5vh,24px) + env(safe-area-inset-bottom,0px))}
+.foot button{background:none;border:1px solid var(--fg);color:var(--fg);width:40px;height:40px;border-radius:50%;cursor:pointer;display:grid;place-items:center;padding:0;font:inherit;font-size:1.3rem;line-height:1}
+.foot button:disabled{opacity:.25;cursor:default}
+.foot button:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:60vw}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--soft)}
+.dots i.on{background:var(--fg)}
+.dots i.grid-dot{border-radius:1px}
+@media (prefers-reduced-motion:reduce){.track{scroll-behavior:auto}.all{animation:none}}
+</style>
+</head>
+<body>
+
+
+<h1>I love you <em>Jacklyn</em></h1>
+<div class="track" id="track" tabindex="0" aria-label="Photos. Swipe to see the next one.">
+    <div class="panel"><img src="img/proposal-couple.jpg" alt="Jacklyn and Daniel in front of the white rose heart" draggable="false"></div>
+    <div class="panel"><img src="img/proposal-kneel.jpg" alt="Daniel on one knee holding red roses as Jacklyn smiles" draggable="false"></div>
+    <div class="panel"><img src="img/proposal-roses.jpg" alt="Jacklyn and Daniel smiling with a bouquet of red roses" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/proposal-toast.jpg" alt="Daniel raising a glass of champagne with Jacklyn under the rose heart" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/proposal-parents.jpg" alt="Jacklyn and Daniel with family under the rose heart" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/proposal-family.jpg" alt="Jacklyn surrounded by family and a little one in a pink dress" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/proposal-parents2.jpg" alt="Jacklyn and Daniel with more family under the rose heart" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-parents.jpg" alt="Jacklyn and Daniel with family beside the engagement sign" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-portrait.jpg" alt="Jacklyn and Daniel in front of the black draped arches" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-close.jpg" alt="Close portrait of Jacklyn and Daniel by the engagement sign" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-gaze.jpg" alt="Jacklyn and Daniel smiling at each other by the engagement sign" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/couple.jpg" alt="Jacklyn in white lace and Daniel in a black suit beside the engagement sign" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-sister.jpg" alt="Jacklyn and Daniel with family and a little girl in a white dress" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/selfie.jpg" alt="Jacklyn and Daniel smiling in a selfie by the backdrop" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-tent.jpg" alt="Jacklyn and Daniel in a close selfie under string lights" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/party-kiss.jpg" alt="Jacklyn and Daniel leaning heads together making kissy faces" loading="lazy" draggable="false"></div>
+    <div class="panel"><img src="img/silly.jpg" alt="Jacklyn making a playful pout with Daniel behind her" loading="lazy" draggable="false"></div>
+    <div class="panel end" aria-hidden="true"></div>
+</div>
+<section class="all" id="all" hidden aria-label="All photos">
+  <div class="grid">
+        <button class="ph" type="button" data-i="0" aria-label="Go to photo 1"><img src="img/proposal-couple.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="1" aria-label="Go to photo 2"><img src="img/proposal-kneel.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="2" aria-label="Go to photo 3"><img src="img/proposal-roses.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="3" aria-label="Go to photo 4"><img src="img/proposal-toast.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="4" aria-label="Go to photo 5"><img src="img/proposal-parents.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="5" aria-label="Go to photo 6"><img src="img/proposal-family.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="6" aria-label="Go to photo 7"><img src="img/proposal-parents2.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="7" aria-label="Go to photo 8"><img src="img/party-parents.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="8" aria-label="Go to photo 9"><img src="img/party-portrait.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="9" aria-label="Go to photo 10"><img src="img/party-close.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="10" aria-label="Go to photo 11"><img src="img/party-gaze.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="11" aria-label="Go to photo 12"><img src="img/couple.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="12" aria-label="Go to photo 13"><img src="img/party-sister.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="13" aria-label="Go to photo 14"><img src="img/selfie.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="14" aria-label="Go to photo 15"><img src="img/party-tent.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="15" aria-label="Go to photo 16"><img src="img/party-kiss.jpg" alt="" loading="lazy"></button>
+        <button class="ph" type="button" data-i="16" aria-label="Go to photo 17"><img src="img/silly.jpg" alt="" loading="lazy"></button>
+  </div>
+  <div class="again"><button id="again" type="button" aria-label="Back to the slideshow">&#8634;</button></div>
+</section>
+<div class="foot">
+  <button id="prev" type="button" aria-label="Previous">&#8249;</button>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <button id="next" type="button" aria-label="Next">&#8250;</button>
+</div>
+
+<script>
+(function(){
+  const track=document.getElementById('track'),panels=[...track.querySelectorAll('.panel:not(.end)')],dots=document.getElementById('dots'),all=document.getElementById('all');
+  const prev=document.getElementById('prev'),next=document.getElementById('next');
+  panels.forEach(()=>dots.appendChild(document.createElement('i')));const g=document.createElement('i');g.className='grid-dot';dots.appendChild(g);
+  const W=()=>track.clientWidth, cur=()=>Math.round(track.scrollLeft/W());
+  function to(n){if(n>=panels.length){showGrid();return;}n=Math.max(0,n);track.scrollTo({left:n*W()});}
+  function showGrid(){document.body.classList.add('grid-mode');all.hidden=false;window.scrollTo(0,0);}
+  function showSlide(n){all.hidden=true;document.body.classList.remove('grid-mode');track.style.scrollBehavior='auto';track.scrollLeft=n*W();track.style.scrollBehavior='';update();}
+  function update(){const c=cur();if(c>=panels.length){showGrid();return;}[...dots.children].forEach((d,k)=>d.classList.toggle('on',k===c));prev.disabled=c===0;
+    const n=panels[c+1]&&panels[c+1].querySelector('img');if(n&&n.loading==='lazy')n.loading='eager';}
+  track.addEventListener('scroll',()=>requestAnimationFrame(update),{passive:true});
+  prev.addEventListener('click',()=>to(cur()-1));
+  next.addEventListener('click',()=>to(cur()+1));
+  document.querySelectorAll('.ph').forEach(b=>b.addEventListener('click',()=>showSlide(+b.dataset.i)));
+  document.getElementById('again').addEventListener('click',()=>showSlide(0));
+  document.addEventListener('keydown',e=>{if(!all.hidden)return;if(e.key==='ArrowLeft')to(cur()-1);if(e.key==='ArrowRight')to(cur()+1);});
+  // mouse drag so it also slides physically on a computer
+  let down=false,sx=0,sl=0,moved=false;
+  track.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=track.scrollLeft;track.classList.add('dragging');});
+  window.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-sx;if(Math.abs(dx)>3)moved=true;track.scrollLeft=sl-dx;});
+  window.addEventListener('pointerup',e=>{if(!down)return;down=false;track.classList.remove('dragging');const dx=e.clientX-sx;const base=Math.round(sl/W());
+    to(Math.abs(dx)>W()*0.15?base+(dx<0?1:-1):base);});
+  window.addEventListener('resize',()=>{track.scrollLeft=cur()*W();});
+  update();
+})();
+</script>
+
+</body>
+</html>
